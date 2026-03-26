@@ -16,6 +16,11 @@ const transactionRoutes = require('./routes/transaction.routes');
 /**
  * Use Routes
  */
+
+    app.get("/", (req, res) => {
+        res.send("Bank is OPEN")
+    })
+
 app.use("/api/auth", authRouter);
 app.use("/api/accounts", accountRouter);
 app.use("/api/transactions", transactionRoutes);

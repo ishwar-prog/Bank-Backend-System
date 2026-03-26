@@ -86,7 +86,7 @@ async function userLoginController(req, res){
  * - POST /api/auth/logout
  */
 async function userLogoutController(req , res){
-    const token = res.cookies.token || req.headers.authorization?.split("")[1]
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1]
 
     if(!token){
         return res.status(200).json({
@@ -94,11 +94,11 @@ async function userLogoutController(req , res){
         })
     }
 
-    res.cookie("token", "")
-
     await tokenBlacklistModel.create({
         token:token
     })
+
+    res.clearCookie("token");
 
     res.status(200).json({
         message: "User logged out successfully"

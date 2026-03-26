@@ -143,6 +143,7 @@ async function createTransaction(req,res){
 
     await session.commitTransaction()
     session.endSession()
+    
     }catch(error){
         return res.status(400).json({
             message:"Transaction is pending due to an error, please try again later",

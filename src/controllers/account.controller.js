@@ -1,6 +1,6 @@
 const accountModel = require("../models/account.model");
 
-async function createAccountController(req, res){
+async function createAccountController(req, res) {
 
     const userId = req.user;
 
@@ -13,7 +13,7 @@ async function createAccountController(req, res){
     })
 }
 
-async function getUserAccountsController(req, res){
+async function getUserAccountsController(req, res) {
     const accounts = await accountModel.find({ user: req.user._id });
 
     res.status(200).json({
@@ -21,8 +21,8 @@ async function getUserAccountsController(req, res){
     })
 }
 
-async function getAccountBalanceController(req, res){
-    const {accountId} = req.params;
+async function getAccountBalanceController(req, res) {
+    const { accountId } = req.params;
 
     const account = await accountModel.findOne({
         _id: accountId,
@@ -41,7 +41,7 @@ async function getAccountBalanceController(req, res){
     })
 }
 
-module.exports= {
+module.exports = {
     createAccountController,
     getUserAccountsController,
     getAccountBalanceController

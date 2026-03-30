@@ -12,11 +12,11 @@ async function authMiddleware(req, res, next) {
     });
   }
 
-  const isBlacklisted = await tokenBlacklistModel.findOne({ token});
+  const isBlacklisted = await tokenBlacklistModel.findOne({ token });
 
-  if(isBlacklisted){
+  if (isBlacklisted) {
     return res.status(401).json({
-        message: "Unauthorized access, token is blacklisted"
+      message: "Unauthorized access, token is blacklisted"
     })
   }
 
@@ -46,11 +46,11 @@ async function authSystemUserMiddleware(req, res, next) {
     });
   }
 
-  const isBlacklisted = await tokenBlacklistModel.findOne({ token});
+  const isBlacklisted = await tokenBlacklistModel.findOne({ token });
 
-  if(isBlacklisted){
+  if (isBlacklisted) {
     return res.status(401).json({
-        message: "Unauthorized access, token is blacklisted"
+      message: "Unauthorized access, token is blacklisted"
     })
   }
 
@@ -59,10 +59,10 @@ async function authSystemUserMiddleware(req, res, next) {
 
     const user = await userModel.findById(decoded.userId).select("+systemUser");
 
-    if(!user.systemUser){
-        return res.status(403).json({
-            message: "Forbidden access, only system users can perform this action",
-        })
+    if (!user.systemUser) {
+      return res.status(403).json({
+        message: "Forbidden access, only system users can perform this action",
+      })
     }
 
     req.user = user;

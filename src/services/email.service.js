@@ -40,12 +40,12 @@ const sendEmail = async (to, subject, text, html) => {
   }
 };
 
- async function sendRegisterEmail(to, name) {
-    const subject  = "Welcome to Bank-Backend!";
-    const text = `Hi ${name},\n\nWelcome to Bank-Backend! We're excited to have you on board. If you have any questions or need assistance, feel free to reach out.\n\nBest regards,\nThe Bank-Backend Team`;
-    const html = `<p>Hi ${name},</p><p>Welcome to Bank-Backend! We're excited to have you on board. If you have any questions or need assistance, feel free to reach out.</p><p>Best regards,<br>The Bank-Backend Team</p>`;
+async function sendRegisterEmail(to, name) {
+  const subject = "Welcome to Bank-Backend!";
+  const text = `Hi ${name},\n\nWelcome to Bank-Backend! We're excited to have you on board. If you have any questions or need assistance, feel free to reach out.\n\nBest regards,\nThe Bank-Backend Team`;
+  const html = `<p>Hi ${name},</p><p>Welcome to Bank-Backend! We're excited to have you on board. If you have any questions or need assistance, feel free to reach out.</p><p>Best regards,<br>The Bank-Backend Team</p>`;
 
-    await sendEmail(to, subject, text, html);
- }
+  await sendEmail(to, subject, text, html);
+}
 
 module.exports = { sendEmail, sendRegisterEmail };

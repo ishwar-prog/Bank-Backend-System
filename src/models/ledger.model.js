@@ -1,28 +1,28 @@
 const mongoose = require("mongoose")
 
 const ledgerSchema = new mongoose.Schema({
-    account:{
+    account: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Account",
-        required:[true, "Account is required"],
+        required: [true, "Account is required"],
         index: true,
         immutable: true
     },
-    amount:{
+    amount: {
         type: Number,
         required: [true, "Amount is required"],
         immutable: true
     },
-    transactionn:{
+    transactionn: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Transaction",
-        required:[true, "Transaction is required"],
+        required: [true, "Transaction is required"],
         index: true,
         immutable: true
     },
-    type:{
+    type: {
         type: String,
-        enum:{
+        enum: {
             values: ["DEBIT", "CREDIT"],
             message: "Type must be either DEBIT or CREDIT",
         },
@@ -31,7 +31,7 @@ const ledgerSchema = new mongoose.Schema({
     }
 })
 
-function preventLedgerModification(){
+function preventLedgerModification() {
     throw new Error("Ledger entries cannot be modified or deleted")
 }
 

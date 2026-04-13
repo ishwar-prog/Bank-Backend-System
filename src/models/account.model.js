@@ -2,66 +2,66 @@ const mongoose = require("mongoose")
 const ledgerModel = require("./ledger.model")
 
 const accountSchema = new mongoose.Schema({
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required:[true, "User is required"],
+        required: [true, "User is required"],
         index: true
     },
-    status:{
+    status: {
         type: String,
-        enum:{
+        enum: {
             values: ["ACTIVE", "FROZEN", "CLOSED"],
             message: "Status must be either ACTIVE, FROZEN or CLOSED",
         },
         default: "ACTIVE"
     },
-    currency:{
+    currency: {
         type: String,
         required: [true, "Currency is required"],
-        default:"INR"
+        default: "INR"
     }
-},{
+}, {
     timestamps: true
 })
 
-accountSchema.index({user:1 , status:1})
+accountSchema.index({ user: 1, status: 1 })
 
-accountSchema.methods.getBalance = async function(){
+accountSchema.methods.getBalance = async function () {
     const balanceData = await ledgerModel.aggregate([
-        {$match: {account: this._id}},
+        { $match: { account: this._id } },
         {
-            $group:{
-                _id:null,
-                totaldebit:{
-                    $sum:{
-                        $cond:[
-                            {$eq:["$type", "DEBIT"]},
+            $group: {
+                _id: null,
+                totaldebit: {
+                    $sum: {
+                        $cond: [
+                            { $eq: ["$type", "DEBIT"] },
                             "$amount",
                             0
                         ]
                     }
                 },
-                totalcredit:{
-                    $sum:{
-                        $cond:[
-                            {$eq:["$type", "CREDIT"]},
+                totalcredit: {
+                    $sum: {
+                        $cond: [
+                            { $eq: ["$type", "CREDIT"] },
                             "$amount",
                             0
                         ]
                     }
 
                 }
-            } 
-        },{
-            $project:{
-                _id:0,
-                balance:{$subtract:["$totalcredit", "$totaldebit"]}
+            }
+        }, {
+            $project: {
+                _id: 0,
+                balance: { $subtract: ["$totalcredit", "$totaldebit"] }
             }
         }
     ])
 
-    if(balanceData.length === 0){
+    if (balanceData.length === 0) {
         return 0;
     }
     return balanceData[0].balance;
